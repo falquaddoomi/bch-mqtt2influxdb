@@ -114,8 +114,10 @@ class Mqtt2InfluxDB:
                     try:
                         payload = json.loads(payload)
                     except Exception as e:
-                        logging.error('parse json: %s topic: %s payload: %s', e, message.topic, message.payload)
-                        return
+                        logging.warn('parse json: %s topic: %s payload: %s', e, message.topic, message.payload)
+                        logging.warn("passing on payload as-is to the rest of the code")
+                        payload = str(payload)
+                        # return
 
                     msg = {
                         "topic": message.topic.split('/'),
